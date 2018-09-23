@@ -51,6 +51,7 @@
 - leetcode
   - speedup_input.cc
   - 9.cc
+  - 20.cc
   - 31.cc
   - 46.cc
   - 47.cc
