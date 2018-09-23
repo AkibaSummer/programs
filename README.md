@@ -49,6 +49,7 @@
 - jisuanke 
   - _17627.cpp
 - leetcode
+  - speedup_input.cc
   - 9.cc
   - 31.cc
   - 46.cc
