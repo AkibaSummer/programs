@@ -29,6 +29,9 @@
   - 997
     - A.cpp
     - _B.cpp
+  - 1033
+    - A.cc
+    - B.cc
   - 1041
     - A.cpp
     - B.cpp
