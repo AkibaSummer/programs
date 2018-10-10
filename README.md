@@ -46,6 +46,10 @@
     - B.cc
     - C.cc
     - _D.cc
+  - 1059
+    - A.cc
+    - B.cc
+    - C.cc
 - jisuanke 
   - _17627.cpp
 - leetcode
