@@ -6,9 +6,7 @@ public class DemoC3{
         System.out.println(iArr);
         iArr = null;//垃圾回收
     }
-    
     public static void main(String[] args){
         ShowObjRef();
-        
     }
 }
