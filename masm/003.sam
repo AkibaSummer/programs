@@ -1,0 +1,21 @@
+data segment
+    string db 'Hello World!',13,10,'$'
+ends
+
+stack segment
+    dw 128 dup(0)
+ends
+
+code segment
+    assume cs:code,ds:data
+start:
+    mov ax,data
+    mov ds,ax
+    mov dx,offset string
+    mov ah,9
+    int 21H
+    mov ax,2c00H
+    int 21H
+code ends
+
+end start

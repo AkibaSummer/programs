@@ -1,0 +1,13 @@
+%include "io.inc"
+
+section .text
+global CMAIN
+CMAIN:
+    ;write your code here
+    mov ax,5
+    mov bx,10
+    add ax,bx
+    sub ax,1
+    hlt
+    
+    ret
