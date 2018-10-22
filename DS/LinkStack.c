@@ -13,7 +13,7 @@ const int OVERFLOW = -2;
 typedef struct LinkStack{
     SElemType data;
     struct LinkStack *next;
-}Snode,LinkStack;
+}LinkStack;
 
 void InitlinkStack(LinkStack *s){
     s=NULL;
@@ -33,7 +33,6 @@ Status Pop(LinkStack *s,LinkStack *e){
     e=s->next;
     free(s);
     return SUCCESS;
-    
 }
 
 int main(){

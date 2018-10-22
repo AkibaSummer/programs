@@ -42,6 +42,4 @@ Status Pop(SqStack *S,SElemType *e){
 }
 
 int main(){
-    SqStack *stack;
-    InitStack(stack);
 }
