@@ -53,6 +53,9 @@
     - A.cc
     - B.cc
     - C.cc
+  - 1072
+    - A.cc
+    - C.cc
 - jisuanke 
   - _17627.cpp
 - leetcode
