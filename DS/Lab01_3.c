@@ -9,6 +9,8 @@ typedef int bool;
 const int true=1;
 const int false=0;
 const double eps=1e-6;
+const unsigned int LIST_INIT_SIZE=1000;
+const unsigned int LIST_INCREMENT=1000;
 
 typedef struct city{
     char name[namesize];
@@ -16,10 +18,11 @@ typedef struct city{
 }city;
 
 typedef struct ListNode{
-    city data;
-    struct ListNode *next;
+    city *data;
+    int length;
+    int listsize;
 }ListNode;
-ListNode* root=NULL;
+ListNode* root;
 
 void cls(){
     #ifdef linux
@@ -27,7 +30,15 @@ void cls(){
     #endif
     #ifdef __WINDOWS_ 
         system("cls");
-    #endif    
+    #endif
+}
+
+void init(){
+    root=malloc(sizeof(ListNode));
+    root->data=(city*)malloc(LIST_INIT_SIZE*sizeof(city));
+    root->length=0;
+    root->listsize=LIST_INIT_SIZE;
+    cls();
 }
 
 void output(city a){
@@ -44,55 +55,56 @@ void copyCity(city* to,city* from){
     strcpy(to->name,from->name);
 }
 
-ListNode* insert(ListNode* root,city data){
-    ListNode *temp=(ListNode*)malloc(sizeof(ListNode));
-    copyCity(&(temp->data),&data);
-    temp->next=root;
-    return temp;
+bool insert(ListNode* root,city data){
+    if (root->length>=root->listsize){        
+        city *newBase=(city*)realloc(root->data,(root->listsize+LIST_INCREMENT)*sizeof(city));
+        if (!newBase)return false;
+        root->data=newBase;
+        root->listsize+=LIST_INCREMENT;
+    }
+    copyCity(&(root->data[root->length++]),&data);
+    return true;
 }
 
-bool deleteCityByName(ListNode* root,ListNode** pre,char name[]){
-    if (root==NULL){
-        return false;
-	}
-    else if (!strcmp(name,root->data.name)){
-        (*pre)=root->next;
-        free(root);
-        return true;
-    }
-    else return deleteCityByName(root->next,&(root->next),name);
+bool deleteCityByName(ListNode* root,char name[]){
+    for (int i=0;i<root->length;i++)
+        if (!strcmp(name,root->data[i].name)){
+            --root->length;
+            for (int j=i;i<root->length;i++){
+            	copyCity(&(root->data[j]),&(root->data[j+1]));    
+            }
+            return true;
+        }
+    return false;
 }
 
-bool deleteCityByLocation(ListNode* root,ListNode** pre,double x,double y){
-    if (root==NULL){
-        return false;
-	}
-    else if (cmp(root->data.x,x)&&cmp(root->data.y,y)){
-        (*pre)=root->next;
-        free(root);
-        return true;
-    }
-    else return deleteCityByLocation(root->next,&(root->next),x,y);
+bool deleteCityByLocation(ListNode* root,double x,double y){
+    for (int i=0;i<root->length;i++)
+    	if (cmp(root->data[i].x,x)&&cmp(root->data[i].y,y)){
+            --root->length;
+            for (int j=i;i<root->length;i++){
+            	copyCity(&(root->data[j]),&(root->data[j+1]));    
+            }
+            return true;
+        }
+    return false;
 }
 
 city* findCityByName(ListNode* root,char name[]){
-    if (root==NULL){
-        return NULL;
-    }
-    else if (!strcmp(name,root->data.name)){
-        return &(root->data);
-    }
-    else return findCityByName(root->next,name);
+    for (int i=0;i<root->length;i++)
+        if (!strcmp(name,root->data[i].name)){
+            return &(root->data[i]);
+        }
+    return NULL;
 }
 
 city* findCityByLocation(ListNode* root,double x,double y){
-    if (root==NULL){
-        return NULL;
+    for (int i=0;i<root->length;i++){
+        if (cmp(root->data[i].x,x)&&cmp(root->data[i].y,y)){
+            return &(root->data[i]);
+        }
     }
-    else if (cmp(root->data.x,x)&&cmp(root->data.y,y)){
-        return &(root->data);
-    }
-    else return findCityByLocation(root->next,x,y);
+    return NULL;
 }
 
 double sqr(double a){
@@ -105,12 +117,11 @@ double distOfCityAndPoint(city a,double x,double y){
 
 void outputCityNameNearLocation(ListNode *root,double x,double y,double dist){
     int num=0;
-    while(root!=NULL){
-		if (distOfCityAndPoint(root->data,x,y)<dist){
-        	printf("城市 %s 到 (%.3lf,%.3lf) 的距离为 %.3lf\n",root->data.name,x,y,distOfCityAndPoint(root->data,x,y));   
+    for (int i=0;i<root->length;i++){
+		if (distOfCityAndPoint(root->data[i],x,y)<dist){
+        	printf("城市 %s 到 (%.3lf,%.3lf) 的距离为 %.3lf\n",root->data[i].name,x,y,distOfCityAndPoint(root->data[i],x,y));   
             ++num;
         }
-        root=root->next;
     }
     if (num==0){
         printf("没有与点 (%.3lf,%.3lf) 距离在 %.3lf 以内的城市\n",x,y,dist);        
@@ -118,9 +129,8 @@ void outputCityNameNearLocation(ListNode *root,double x,double y,double dist){
 }
 
 int outputAllCity(ListNode* root){
-    if (root==NULL)return 0;
-    output(root->data);
-    return outputAllCity(root->next)+1;
+    for (int i=0;i<root->length;i++) output(root->data[i]);
+    return root->length;
 }
 
 void editCity(city* ret){
@@ -144,9 +154,9 @@ void function1(){
     scanf("%s",input.name);
     printf("请输入城市坐标（两个数x,y，中间以空格隔开）:");
     scanf("%lf %lf",&input.x,&input.y);
-    root=insert(root,input);
     cls();
-    printf("插入成功\n");    
+    if (insert(root,input)) printf("插入成功\n"); 
+    else printf("插入失败\n");
 }
 
 void function2(){
@@ -154,7 +164,7 @@ void function2(){
     printf("请输入想要删除的城市的名字（不含空格,不超过10个字符）:");    
     scanf("%s",input);
     cls();
-    if (deleteCityByName(root,&root,input)){
+    if (deleteCityByName(root,input)){
   		printf("成功删除一个名字为 %s 的城市\n",input);
     }
     else{
@@ -167,7 +177,7 @@ void function3(){
     printf("请输入想要删除的城市坐标（两个数x,y，中间以空格隔开）:");   
     scanf("%lf %lf",&x,&y);
     cls();
-    if (deleteCityByLocation(root,&root,x,y)){
+    if (deleteCityByLocation(root,x,y)){
   		printf("成功删除一个坐标为 (%.3lf,%.3lf) 的城市\n",x,y);
     }
     else{
@@ -257,7 +267,7 @@ int getFunction(){
     printf("6：根据城市名修改城市；\n");
     printf("7：根据城市坐标修改城市；\n");    
     printf("8：找出与某一坐标距离在某一值之内的所有城市；\n");
-    printf("9：输出当前的所有城市；\n");
+    printf("9：输出当前的所有城市；\n");    
     printf("0：退出程序。\n");
     printf("请输入：");
     scanf("%s",input);
@@ -266,7 +276,7 @@ int getFunction(){
 }
 
 int main(){
-    cls();
+    init();
     printf("欢迎使用城市地理位置查询系统\n");
     for (;;){
         switch(getFunction()){
