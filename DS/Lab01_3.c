@@ -17,12 +17,12 @@ typedef struct city{
     double x,y;
 }city;
 
-typedef struct ListNode{
+typedef struct SqList{
     city *data;
     int length;
     int listsize;
-}ListNode;
-ListNode* root;
+}SqList;
+SqList* root;
 
 void cls(){
     #ifdef linux
@@ -34,7 +34,7 @@ void cls(){
 }
 
 void init(){
-    root=malloc(sizeof(ListNode));
+    root=malloc(sizeof(SqList));
     root->data=(city*)malloc(LIST_INIT_SIZE*sizeof(city));
     root->length=0;
     root->listsize=LIST_INIT_SIZE;
@@ -55,7 +55,7 @@ void copyCity(city* to,city* from){
     strcpy(to->name,from->name);
 }
 
-bool insert(ListNode* root,city data){
+bool insert(SqList* root,city data){
     if (root->length>=root->listsize){        
         city *newBase=(city*)realloc(root->data,(root->listsize+LIST_INCREMENT)*sizeof(city));
         if (!newBase)return false;
@@ -66,7 +66,7 @@ bool insert(ListNode* root,city data){
     return true;
 }
 
-bool deleteCityByName(ListNode* root,char name[]){
+bool deleteCityByName(SqList* root,char name[]){
     for (int i=0;i<root->length;i++)
         if (!strcmp(name,root->data[i].name)){
             --root->length;
@@ -78,7 +78,7 @@ bool deleteCityByName(ListNode* root,char name[]){
     return false;
 }
 
-bool deleteCityByLocation(ListNode* root,double x,double y){
+bool deleteCityByLocation(SqList* root,double x,double y){
     for (int i=0;i<root->length;i++)
     	if (cmp(root->data[i].x,x)&&cmp(root->data[i].y,y)){
             --root->length;
@@ -90,7 +90,7 @@ bool deleteCityByLocation(ListNode* root,double x,double y){
     return false;
 }
 
-city* findCityByName(ListNode* root,char name[]){
+city* findCityByName(SqList* root,char name[]){
     for (int i=0;i<root->length;i++)
         if (!strcmp(name,root->data[i].name)){
             return &(root->data[i]);
@@ -98,7 +98,7 @@ city* findCityByName(ListNode* root,char name[]){
     return NULL;
 }
 
-city* findCityByLocation(ListNode* root,double x,double y){
+city* findCityByLocation(SqList* root,double x,double y){
     for (int i=0;i<root->length;i++){
         if (cmp(root->data[i].x,x)&&cmp(root->data[i].y,y)){
             return &(root->data[i]);
@@ -115,7 +115,7 @@ double distOfCityAndPoint(city a,double x,double y){
     return sqrt(sqr(a.x-x)+sqr(a.y-y));
 }
 
-void outputCityNameNearLocation(ListNode *root,double x,double y,double dist){
+void outputCityNameNearLocation(SqList *root,double x,double y,double dist){
     int num=0;
     for (int i=0;i<root->length;i++){
 		if (distOfCityAndPoint(root->data[i],x,y)<dist){
@@ -128,7 +128,7 @@ void outputCityNameNearLocation(ListNode *root,double x,double y,double dist){
     }
 }
 
-int outputAllCity(ListNode* root){
+int outputAllCity(SqList* root){
     for (int i=0;i<root->length;i++) output(root->data[i]);
     return root->length;
 }
