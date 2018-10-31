@@ -15,23 +15,24 @@ typedef struct LinkStack{
     struct LinkStack *next;
 }LinkStack;
 
-void InitlinkStack(LinkStack *s){
-    s=NULL;
+void InitlinkStack(LinkStack **s){
+    *s=NULL;
 }
 
-Status Push(LinkStack *s,SElemType e){
+Status Push(LinkStack **s,SElemType e){
     LinkStack* p=(LinkStack*)malloc(sizeof(LinkStack));
     if (!p)return OVERFLOW;
-    p->next=s;
+    p->next=*s;
     p->data=e;
-    s=p;
+    *s=p;
     return SUCCESS;
 }
 
-Status Pop(LinkStack *s,LinkStack *e){
-    if (s==NULL)return ERROR;
-    e=s->next;
-    free(s);
+Status Pop(LinkStack **s){
+    if (*s==NULL)return ERROR;
+    LinkStack *e=(*s)->next;
+    free(*s);
+    *s=e;
     return SUCCESS;
 }
 
