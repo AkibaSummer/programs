@@ -1,10 +1,6 @@
 package project5;
 
-<<<<<<< HEAD
 import java.util.*;
-=======
-import java.util.Random;
->>>>>>> 85a7e418df485b58f34df2c551ab67558e5dc76c
 import javafx.application.*;
 import javafx.event.*;
 import javafx.stage.*;
@@ -88,7 +84,7 @@ public class Twenty_Four_Point_Game extends Application {
 	private Button buttons[]=new Button[] {
 			newButton("Find a Solution",25,10,e->{
 				texts[0].setText(calc.calc24Point(t[0]%13+1,t[1]%13+1,t[2]%13+1,t[3]%13+1));
-				}),
+			}),
 			newButton("Refresh",620,10,e->{
 				for (int i=0;i<4;i++) 
 					images[i].setImage(new Image(getClass().getResource("card/"+((t[i]=new Random().nextInt(52))+1)+".png").toString()));
@@ -96,7 +92,6 @@ public class Twenty_Four_Point_Game extends Application {
 			newButton("Verify",645,335,e->{
 				String temp[]=('*'+texts[1].getText()).split("\\D+");
 				if (temp.length==5)
-<<<<<<< HEAD
 					for (int i=0;i<16;i++) 
 						if (t[i/4]%13+1==Integer.parseInt(temp[i%4+1])) {temp[i%4+1]="0";i+=3-i%4;}
 				int sum=0;
@@ -110,30 +105,13 @@ public class Twenty_Four_Point_Game extends Application {
 				catch (Exception E) {texts[0].setText("Wrong expression!");}
 			})
 	};
-=======
-				for (int i=0;i<4;i++)
-					for (int j=1;j<=4;j++) 
-						if (t[i]%13+1==Integer.parseInt(temp[j])) {temp[j]="0";break;}
-				int sum=0;
-				for (int i=1;i<temp.length;i++)
-					sum+=Integer.parseInt(temp[i]);
-				if (temp.length!=5||sum!=0) texts[0].setText("Number mismatch.");
-				else if (calc.calcInfix(texts[1].getText())==24.0) texts[0].setText("You are a genius!");
-				else texts[0].setText("You are foolish!");
-			})};
->>>>>>> 85a7e418df485b58f34df2c551ab67558e5dc76c
 	public void start(Stage primaryStage) {
 		primaryStage.setHeight(400);
 		primaryStage.setWidth(800);
 		primaryStage.show();
 		Pane root = new Pane();
-<<<<<<< HEAD
 		root.getChildren().addAll(images[0],images[1],images[2],images[3],newLabel("Enter an experssion:",25,350),
 				buttons[0],buttons[1],buttons[2],texts[0],texts[1]);
-=======
-		root.getChildren().addAll(images[0],images[1],images[2],images[3],newLabel("Enter an experssion:",25,350)
-				,buttons[0],buttons[1],buttons[2],texts[0],texts[1]);
->>>>>>> 85a7e418df485b58f34df2c551ab67558e5dc76c
 		primaryStage.setScene(new Scene(root, primaryStage.getHeight(), primaryStage.getWidth()));
 	}
 	public static void main (String args[]) {
