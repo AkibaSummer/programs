@@ -12,7 +12,7 @@ void Input(SString S){
 
 int Index(SString S,SString T,int pos){
     int i=pos,j=1;
-    while (i<=S[0]&&j<=T[0]){
+    while (i<=S[0]-T[0]+j&&j<=T[0]){
         if (S[i]==T[j]){++i;++j;}
         else {i=i-j+2;j=1;}
     }
