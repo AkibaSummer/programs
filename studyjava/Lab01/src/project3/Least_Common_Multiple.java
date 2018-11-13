@@ -2,8 +2,6 @@ package project3;
 
 import java.util.Scanner;
 
-import com.sun.javafx.fxml.expression.Expression;
-
 public class Least_Common_Multiple {
 	private static int[][] getPrimeFactors(int number) {
 		int temp[][]=new int[2][20];
