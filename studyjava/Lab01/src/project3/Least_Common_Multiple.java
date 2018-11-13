@@ -50,11 +50,20 @@ public class Least_Common_Multiple {
 		return ret;		
 	}
 	public static void main(String args[]) {
-		int a,b;
+		int a=0,b=0;
 		Scanner orz=new Scanner(System.in);
-		a=orz.nextInt();
-		b=orz.nextInt();
-		orz.close();
-		System.out.println(getAns(a,b));
+		for (;;) {
+			try {
+				System.out.print("Please input two number separated by spaces:");
+				a=orz.nextInt();
+				b=orz.nextInt();
+				orz.close();
+				System.out.println("The LCM of "+a+" and "+b+" is "+getAns(a,b));
+				break;
+			}
+			catch(Exception e) {
+				System.out.println("Input ERROR!");
+				orz.nextLine();
+			}}
 	}
 }

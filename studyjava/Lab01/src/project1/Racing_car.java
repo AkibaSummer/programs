@@ -4,7 +4,7 @@ import javafx.animation.*;
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.util.*;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
@@ -24,7 +24,9 @@ class Car{
 		TextField temp=new TextField("10");
 		temp.relocate(x, y);
 		temp.setFont(new Font("Arial",25));
-		temp.setOnAction(e->{t=Integer.parseInt(temp.getText());father.textChanged();});
+		temp.setOnAction(e->{
+			try{t=Integer.parseInt(temp.getText());father.textChanged();}
+			catch(Exception E) {temp.setText(t+"");}});
 		temp.setPrefSize(90, 50);
 		return temp;
 	}
@@ -42,7 +44,6 @@ class Car{
 	}
 }
 
-
 public class Racing_car extends Application {
 	final static int CAR_NUM=6;
 	Timeline timeline=new Timeline();
@@ -52,22 +53,22 @@ public class Racing_car extends Application {
 		primaryStage.setWidth(CAR_NUM*200);
 		primaryStage.show();
 		Pane root = new Pane();
-		
+
 		for (int i=0;i<CAR_NUM;i++) 
 			car[i]=new Car(root,i+1,this);
-		
+
 		textChanged();
 		primaryStage.setScene(new Scene(root, primaryStage.getHeight(), primaryStage.getWidth()));
 		primaryStage.show();
 	}
-	
+
 	public static void main (String args[]) {
 		launch(args);
 		System.out.println("Finish!");
 	}
-	
+
 	public void textChanged() {
-//		timeline.setCycleCount(Timeline.INDEFINITE);
+		//timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().clear();
 		for (int i=0;i<CAR_NUM;i++) {
 			timeline.getKeyFrames().addAll(car[i].start(),car[i].end());
