@@ -12,8 +12,8 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 
 class Car{
-	int t=10;
-	ImageView image=new ImageView(new Image(getClass().getResource("car.png").toString()));
+	private int t=10;
+	private ImageView image=new ImageView(new Image(getClass().getResource("car.png").toString()));
 	private Label newLabel(String text,double x,double y) {
 		Label temp=new Label(text);
 		temp.relocate(x, y);
@@ -45,9 +45,9 @@ class Car{
 }
 
 public class Racing_car extends Application {
-	final static int CAR_NUM=6;
-	Timeline timeline=new Timeline();
-	Car car[]=new Car[CAR_NUM];
+	public final static int CAR_NUM=6;
+	private Timeline timeline=new Timeline();
+	private Car car[]=new Car[CAR_NUM];
 	public void start(Stage primaryStage) {
 		primaryStage.setHeight(CAR_NUM*60+60);
 		primaryStage.setWidth(CAR_NUM*200);
