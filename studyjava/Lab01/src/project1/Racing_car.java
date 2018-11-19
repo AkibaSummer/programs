@@ -68,7 +68,7 @@ public class Racing_car extends Application {
 	}
 
 	public void textChanged() {
-		//timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().clear();
 		for (int i=0;i<CAR_NUM;i++) {
 			timeline.getKeyFrames().addAll(car[i].start(),car[i].end());
