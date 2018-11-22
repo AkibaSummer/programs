@@ -18,3 +18,15 @@ BiThrNode *priornode(BiThrNode *p){
     }
     return (next);
 }
+
+Status CreateBiTree(BiTree &T){
+    scanf("%c",&ch);
+    if (ch=='#')T=NULL;
+    else {
+        if (!(T=(BiTNode *)malloc(sizeof(BiTNode))))
+            exit (OVERFLOW);
+        T->data=ch;
+        CreateBiTree(L->lchild);
+        CreateBiTree(T->rchild);
+    }
+}

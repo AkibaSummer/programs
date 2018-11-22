@@ -44,6 +44,7 @@ TreeNode* buildTree(DataType Preorder[],DataType Inorder[],int number){
         }
     }
 }
+
 /********
     3
    / \
