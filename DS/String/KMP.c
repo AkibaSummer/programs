@@ -1,4 +1,6 @@
-void Get_next(SString T,int &next[]){
+
+void Get_next(SString T,int next[]){
+    int j,k;
     j=1;k=0;
     next[1]=0;
     while(j<=T[0]){
@@ -10,8 +12,9 @@ void Get_next(SString T,int &next[]){
     }
 }
 
-int get_nextval(tring T,int &nextval[]){
-    j=i;nextval[1]=0;k=0;
+int get_nextval(SString T,int nextval[]){
+    int j,k;
+    j=1;nextval[1]=0;k=0;
     while(j<T[0]){
         if (k==0||T[j]==T[k]){
             ++j;++k;
