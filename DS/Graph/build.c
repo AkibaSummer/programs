@@ -144,8 +144,9 @@ void topology(Table table){
     int front=0,back=0;
     
     for (int i=0;i<table.size;i++){
-        father[i]=vl[i]=0;
+        father[i]=0;
         vs[i]=0x3f3f3f3f;
+        vl[i]=-vs[i];
     }
     
     for (int i=0;i<table.size;i++){
@@ -165,7 +166,6 @@ void topology(Table table){
         while (now!=NULL){
             --father[now->linked];
             vs[now->linked]=min(vs[queue[front]]+now->weight,vs[now->linked]);
-            vl[now->linked]=max(vl[queue[front]]+now->weight,vl[now->linked]);
             if (father[now->linked]==0){
                 queue[back++]=now->linked;
             }
@@ -173,6 +173,20 @@ void topology(Table table){
         }
         front++;
     }
+    
+    vl[table.size-1]=vs[table.size-1];
+    for (int i=front-1;i--;i>=0){
+        Node *now=table.data[queue[i]];
+        while (now!=NULL){
+            vl[queue[i]]=max(vl[now->linked]-now->weight,vl[queue[i]]);
+            now=now->next;
+        }
+    }
+    
+    for (int i=0;i<front;i++){
+        printf("%d ",queue[i]);
+    }
+    puts("");
     
     printf("     i vs[i] vl[i]\n");
     for (int i=0;i<table.size;i++){
