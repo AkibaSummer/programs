@@ -1,4 +1,4 @@
-package projec7;
+package project7;
 
 public interface Colorable{
 	public void howToColor();

@@ -1,4 +1,4 @@
-package projec7;
+package project7;
 
 public class Square extends GeometricObject implements Colorable{
 	int width,height;

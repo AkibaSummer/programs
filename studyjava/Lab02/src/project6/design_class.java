@@ -1,4 +1,4 @@
-package projec6;
+package project6;
 
 class GeometricObject {
 	private String color = "white";

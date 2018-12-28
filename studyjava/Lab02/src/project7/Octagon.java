@@ -1,4 +1,4 @@
-package projec7;
+package project7;
 
 public class Octagon implements Cloneable,Comparable<Octagon> {
 	double side;
