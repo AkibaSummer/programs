@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 using namespace std;
-#define totalnums 200
+#define totalnums 10
 
 // 清除屏幕
 #define CLEAR() printf("\033[2J")
@@ -35,9 +35,10 @@ queue<bool*> mutexx;
 int fruitnums;
 bool stop;
 char maps[30][30];
+int pronums,connums,eatednums,proednums;
 
 void msleep(unsigned int times){
-    usleep(times*10);
+    usleep(times*1000);
 }
 
 void *printMaps(void *arg){			//输出地图
@@ -49,19 +50,25 @@ void *printMaps(void *arg){			//输出地图
             for (int j=0;j<30;j++){
                 printf("%c ",maps[i][j]);
             }
-            puts("");
+            puts("   ");
         }
-        printf("%d\n",fruits.size());
+        printf("生产者数量：%d   \n",pronums);
+        printf("消费者数量：%d   \n",connums);
+        printf("未被选中的水果数量：%d   \n",fruits.size());
+        printf("未被领取的水果数量：%d   \n",fruitnums);
+        printf("已食用的水果总数量：%d   \n",eatednums);
+        printf("已生产的水果总数量：%d   \n",proednums);
     }
 }
 
 void *producer(void *arg){
+    pronums++;
     int x,y;
     bool eated=true;
     while(maps[x=rand()%30][y=rand()%30]!=' ');	//找到一个空位置放入新的生产者
     maps[x][y]='P';
     while(1){
-        msleep(rand()%1000);
+        msleep(rand()%200+300);
         if (rand()%10){			//尝试移动
             pthread_mutex_lock(&editmap);                  
             int tempx,tempy,temp;
@@ -76,7 +83,7 @@ void *producer(void *arg){
         }
         else {					//尝试放水果
             pthread_mutex_lock(&mutex_nums);
-            if (fruitnums<totalnums){
+            if (fruitnums<=totalnums){
                 pthread_mutex_lock(&editmap);                
                 int tempx,tempy,temp;
                 temp=rand()%2;
@@ -89,7 +96,7 @@ void *producer(void *arg){
                     eated=false;
                     maps[x][y]='F';
                     maps[x=tempx][y=tempy]='P';
-                    fruitnums++;
+                    fruitnums++,proednums++;
                     pthread_mutex_unlock(&mutex_fruits);          
                 };
                 pthread_mutex_unlock(&editmap);    
@@ -101,6 +108,7 @@ void *producer(void *arg){
 }
 
 void *consumer(void *arg){
+    connums++;
     int x,y;
     int tox,toy;
     bool flag=false;
@@ -108,7 +116,7 @@ void *consumer(void *arg){
     while(maps[x=rand()%30][y=rand()%30]!=' ');	//找到一个空位置放入新的消费者
     maps[x][y]='C';
     while(1){
-        msleep(rand()%1000);      
+        msleep(rand()%200+300);      
         
         if (flag) {			//向水果方向移动
             if (((x==tox)^(y==toy))&&abs(x+y-tox-toy)==1){	//水果就在旁边
@@ -118,6 +126,7 @@ void *consumer(void *arg){
                 flag=false;     
             	pthread_mutex_lock(&mutex_fruits);   
                 fruitnums--;
+                eatednums++;
                 *wanttoeat=true;
             	pthread_mutex_unlock(&mutex_fruits); 
                 pthread_mutex_unlock(&editmap);
@@ -249,8 +258,10 @@ void init(){				//初始化
 
 void start(){
     pthread_create(&flushscreen, NULL, printMaps, NULL);    
-    for (int i=0;i<totalnums;i++){        
+    for (int i=0;i<totalnums;i++){
+        msleep(200);
         pthread_create(pro+i, NULL, producer, NULL);
+        msleep(200);
         pthread_create(con+i, NULL, consumer, NULL);
     }    
 }
