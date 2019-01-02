@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 using namespace std;
+
 #define totalnums 10
+#define speed 1000
 
 // 清除屏幕
 #define CLEAR() printf("\033[2J")
@@ -38,7 +40,7 @@ char maps[30][30];
 int pronums,connums,eatednums,proednums;
 
 void msleep(unsigned int times){
-    usleep(times*1000);
+    usleep(times*speed);
 }
 
 void *printMaps(void *arg){			//输出地图
@@ -48,7 +50,15 @@ void *printMaps(void *arg){			//输出地图
         MOVETO(0,0);
         for (int i=0;i<30;i++){
             for (int j=0;j<30;j++){
-                printf("%c ",maps[i][j]);
+                if (maps[i][j]=='P')
+                    printf("\033[1;34m");
+                if (maps[i][j]=='F')
+                    printf("\033[1;33m");
+                if (maps[i][j]=='C')
+                    printf("\033[1;32m");
+                printf("%c",maps[i][j]);
+                printf("\033[0m");
+                printf(" ");
             }
             puts("   ");
         }
