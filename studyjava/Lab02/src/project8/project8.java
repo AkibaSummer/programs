@@ -91,7 +91,7 @@ public class project8 {
 			String a=String.format("Thread A earn %d Point, Thread B earn %d Point.",suma,sumb);
 			String b=suma==sumb?"No body win.":suma>sumb?"Thread A win!":"Thread B win!";
 			System.out.printf("│%52s%20s%4s│\n",a,b,"");
-			System.out.println("├────────────────────────────────────────────────────────────────────────────┤");
+			System.out.println("└────────────────────────────────────────────────────────────────────────────┘");
 		}
 
 	}
