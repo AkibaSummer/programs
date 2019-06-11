@@ -5,7 +5,6 @@
 #define true 1
 #define false 0
 #define maxnum 100
-
 int comptimes,assitimes;
 
 void swap(ElemType *a,ElemType *b){
