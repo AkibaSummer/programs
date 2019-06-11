@@ -19,11 +19,11 @@ int main(){
                 while (++k<m&&a[i][k]=='*'){
                     a[i][k]='.';
                 }
-                k=j;
+                k=i;
                 while (--k>=0&&a[k][j]=='*'){
                     a[k][j]='.';
                 }
-                k=j;
+                k=i;
                 while (++k<n&&a[k][j]=='*'){
                     a[k][j]='.';
                 }
