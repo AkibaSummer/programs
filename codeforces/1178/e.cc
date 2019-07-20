@@ -2,29 +2,75 @@
 
 using namespace std;
 
-#define endl "\n"
+const int maxn = 1000005;
 
-int isprime(int n){
-    for (int i=sqrt(n);i>=2;i--){
-        if (n%i==0)return 0;
+string s;
+int len;
+bool used[maxn];
+int t;
+void find(char cmp)
+{
+    memset(used, 0, sizeof(used));
+    int cnt = 0;
+    for (int i = 1; i <= len; i++)
+    {
+        if (s[i] == cmp)
+        {
+            cnt++;
+            used[i] = 1;
+        }
     }
-    return 1;
+    int posl = 1, posr = len;
+    int sl = 0, sr = 0;
+    while (posl <= posr)
+    {
+        if (s[posl] == cmp)
+            posl++, sl++;
+        else if (s[posr] == cmp)
+            posr--, sr++;
+        else if (s[posl] == s[posr])
+        {
+            if (sl == sr)
+            {
+                cnt++;
+                used[posl] = 1;
+                used[posr] = 1;
+                posl++;
+                posr--;
+            }
+            else if (sl < sr)
+                posl++;
+            else
+                posr--;
+        }
+        else
+        {
+            if (sl == sr)
+                posl++;
+            else if (sl < sr)
+                posl++;
+            else
+                posr--;
+        }
+    }
+    if (cnt >= t)
+    {
+        for (int i = 1; i <= len; i++)
+            if (used[i])
+                cout << s[i];
+        cout << endl;
+        exit(0);
+    }
 }
-
-int main(){
-    int n;
-    cin>>n;
-    int ans;
-    for (ans=n;ans;ans++){
-        if (isprime(ans))break;
-    }
-    cout<<ans<<endl;
-    for (int i=1;i<n;i++){
-        cout<<i<<' '<<i+1<<endl;
-    }
-    cout<<1<<' '<<n<<endl;
-    ans-=n;
-    while (ans--){
-        cout<<ans+1<<' '<<n-ans-1<<endl;
-    }
+int main()
+{
+    cin >> s;
+    s = " " + s;
+    len = s.length() - 1;
+    t = len / 2;
+    find('a');
+    find('b');
+    find('c');
+    cout << "IMPOSSIBLE" << endl;
+    return 0;
 }
