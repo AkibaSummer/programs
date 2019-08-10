@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-int main(){
+#define int long long
+signed main(){
     int n,k;
     cin>>n>>k;
     priority_queue<int,vector<int>,greater<int>> input;
