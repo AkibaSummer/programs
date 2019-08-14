@@ -174,6 +174,18 @@ void putsf23(int x,int y){
     cout<<x+1<<' '<<y+1<<endl;
 }
 
+void putsf33(int x,int y){
+    cout<<x+3<<' '<<y+2<<endl;
+    cout<<x+2<<' '<<y+1<<endl;
+    cout<<x+1<<' '<<y+3<<endl;
+    cout<<x+2<<' '<<y+2<<endl;
+    cout<<x+3<<' '<<y+1<<endl;
+    cout<<x+3<<' '<<y+3<<endl;
+    cout<<x+1<<' '<<y+2<<endl;
+    cout<<x+2<<' '<<y+3<<endl;
+    cout<<x+1<<' '<<y+1<<endl;
+}
+
 void slove(){
     int n,m;
     cin>>n>>m;
@@ -236,7 +248,7 @@ void slove(){
                         for (int i=n/2-1;i>=1;--i){
                             putsf23(i*2+1,(m/2-1)*2);
                         }
-                        puts33(0,(m/2-1)*2,9,1);
+                        putsf33(0,(m/2-1)*2);
                     }
                 }
             }
