@@ -95,43 +95,20 @@ void dfs1(int u, int f)
 void dfs2(int u, int f) {
     if(u!=1) {
         auto fmx = mx[0][f];
-        long long fadp = LMAX;
+        long long fadp = a[1][f] - a[0][f];
         // printf("ddp:%d %lld %lld\n",u,dp[0][u], dp[1][u]);
-        if(fmx.first == u && smax[0][f].second != -1) {
-            fadp = -smax[0][f].first + a[1][f] - a[0][f];
-        }  {
+
+        if(fmx.second ==u) {
+            // printf("orz");
+            if(smax[0][f].second!=-1)fadp = -smax[0][f].first + a[1][f] - a[0][f];
+        } else if (fmx.second != -1){
+            // printf("orzz");
             fadp = -mx[0][f].first + a[1][f] - a[0][f];
         }
-        dp[1][u] = min(fadp + a[1][u] - a[0][u], dp[1][u]);
-        
-        if (fadp == LMAX) {
-            fadp = LMIN;
-        }
 
-        if (smax[0][u].first < fadp)
-        {
-            smax[0][u].first = fadp;
-            smax[0][u].second = f;
-        }
-
-        if (mx[0][u].first < smax[0][u].first)
-        {
-            swap(mx[0][u], smax[0][u]);
-        }
-
-        fmx = mx[1][f];
-        fadp = LMAX;
-        if(fmx.first == u && smax[1][f].second != -1) {
-            fadp = -smax[1][f].first + a[0][f] - a[1][f];
-        } else {
-            fadp = -mx[1][f].first + a[0][f] - a[1][f];
-        }
-        dp[0][u] = min(fadp + a[0][u] - a[1][u], dp[0][u]);
+        dp[1][f] = max(fadp, dp[1][f]);
 
 
-        if (fadp == LMAX) {
-            fadp = LMIN;
-        }
 
         if (smax[1][u].first < fadp)
         {
@@ -144,7 +121,35 @@ void dfs2(int u, int f) {
             swap(mx[1][u], smax[1][u]);
         }
 
+        fmx = mx[1][f];
+        fadp = a[0][f] - a[1][f];
+        if(fmx.second == u) {
+            if(smax[1][f].second!=-1)fadp = -smax[1][f].first + a[0][f] - a[1][f];
+        } else if (fmx.second != -1){
+            fadp = -mx[1][f].first + a[0][f] - a[1][f];
+        }
+        dp[0][f] = max(fadp, dp[0][f]);
+
+        if (smax[0][u].first < fadp)
+        {
+            smax[0][u].first = fadp;
+            smax[0][u].second = f;
+        }
+
+        if (mx[0][u].first < smax[0][u].first)
+        {
+            swap(mx[0][u], smax[0][u]);
+        }
+
         
+        if (mx[0][u].first != LMIN) {
+            dp[1][u] = -mx[0][u].first + dp[1][u];
+        }
+        if (mx[1][u].first != LMIN) {
+            dp[0][u] = -mx[1][u].first + dp[0][u];
+        }
+
+
         // printf("ddp:%d %lld %lld\n",u,dp[0][u], dp[1][u]);
         // printf("mx:%d (%lld, %d) (%lld, %d)\n",u,mx[0][u].first, mx[0][u].second, mx[1][u].first, mx[1][u].second );
         // printf("smax:%d (%lld, %d) (%lld, %d)\n",u,smax[0][u].first, smax[0][u].second, smax[1][u].first, smax[1][u].second);
@@ -197,3 +202,19 @@ int main()
         printf("%lld\n",ret);
     }
 }
+/*
+1
+5
+1 1 1 1 1
+5 0 0 0 0
+1 2
+2 3
+3 4
+4 5
+
+
+1 5
+0 1 1 1 1
+3 0 0 0 2
+1 2 2 3 3 4 4 5
+*/
