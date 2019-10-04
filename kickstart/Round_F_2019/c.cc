@@ -11,6 +11,7 @@ const int inf = 1ll << 60;
 int saved[100005][2][2];
 void dfs(int now, int pre, int isnowused, int isdeploynow,
          vector<vector<int>> &links, vector<int> &input) {
+  if (saved[now][isnowused][isdeploynow] != 0x8080808080808080) return;
   if (links[now].size() == 1 && pre != -1) {
     if (isnowused && isdeploynow) saved[now][1][1] = 0;
     if (isnowused && !isdeploynow) saved[now][1][0] = 0;
