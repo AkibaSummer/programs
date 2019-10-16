@@ -15,6 +15,7 @@
 < special , , >
 < variable , b >
 < special , ; >
+< operator , / >
 < variable , scanf >
 < bracket , ( >
 < const string , "%d%d" >
