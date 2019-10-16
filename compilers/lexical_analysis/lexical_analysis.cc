@@ -19,12 +19,12 @@ class Lexical_analysis {
   }
   static const string keywords[], operators[];
   enum Stat { BEGIN, NUMBER, VAR, EXPR };
+
+ public:
   void ERROR(string message) {
     cout << "ERROR: " << message << endl;
     exit(0);
   }
-
- public:
   void input_text() {
     input.clear();
     string tmp;
@@ -72,6 +72,7 @@ class Lexical_analysis {
           while (isnum(input[i]) || input[i] == '.') {
             nowstr.push_back(input[i]);
             i++;
+            if (i == input.length()) ERROR("number ERROR");
           }
           i--;
           result.push_back({"number", nowstr});
@@ -82,6 +83,7 @@ class Lexical_analysis {
           while (ischar(input[i])) {
             nowstr.push_back(input[i]);
             i++;
+            if (i == input.length()) ERROR("variable or keyword ERROR");
           }
           i--;
           int flag = 1;
@@ -167,6 +169,10 @@ int main() {
   lexical_analysis.input_text();
   // lexical_analysis.format_code();
   // lexical_analysis.output_text();
-  lexical_analysis.analysis();
+  try {
+    lexical_analysis.analysis();
+  } catch (exception e) {
+    lexical_analysis.ERROR("unknown ERROR");
+  }
   lexical_analysis.output_result();
 }
