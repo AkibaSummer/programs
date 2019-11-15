@@ -15,9 +15,9 @@ class Solution {
 
   bool slove(pair<int, int> pos, int cnt) {
     // cerr << "->" << pos.first << ' ' << pos.second << ' ' << cnt << endl;
-    if (cnt>pre){
-      pre=cnt;
-      cerr<<cnt<<endl;
+    if (cnt > pre) {
+      pre = cnt;
+      // cerr<<cnt<<endl;
     }
     if (cnt == map_size * map_size) {
       return true;
@@ -41,6 +41,11 @@ class Solution {
   }
 
  public:
+  void init() {
+    ans.clear();
+    for (auto &i : maps)
+      for (auto &j : i) j = 0;
+  }
   Solution(int size) {
     map_size = size;
     maps.clear();
@@ -73,13 +78,14 @@ int main() {
       break;
     } else {
       // cerr << "test" << endl;
+      solution.init();
       auto ans = solution.getAns(now);
       // cerr << "test" << endl;
       for (auto &i : ans) {
         cout << i << ' ';
       }
       cout << endl;
-      break;
+      // break;
     }
   }
 }
