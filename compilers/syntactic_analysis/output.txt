@@ -1,0 +1,77 @@
+Please input text (splite with space or enter, end with $):
+slr result:
+ Step|Stack                         |                         Input|              Action
+    1|0                             |      num + num * num / num $ |                    
+     |                              |                              |                    
+    2|0   5                         |          + num * num / num $ |             Shift 5
+     |    num                       |                              |                    
+    3|0   3                         |          + num * num / num $ |    reduce by F->num
+     |    F                         |                              |                    
+    4|0   2                         |          + num * num / num $ |      reduce by T->F
+     |    T                         |                              |                    
+    5|0   1                         |          + num * num / num $ |      reduce by E->T
+     |    E                         |                              |                    
+    6|0   1   6                     |            num * num / num $ |             Shift 6
+     |    E   +                     |                              |                    
+    7|0   1   6   5                 |                * num / num $ |             Shift 5
+     |    E   +   num               |                              |                    
+    8|0   1   6   3                 |                * num / num $ |    reduce by F->num
+     |    E   +   F                 |                              |                    
+    9|0   1   6   11                |                * num / num $ |      reduce by T->F
+     |    E   +   T                 |                              |                    
+   10|0   1   6   11  8             |                  num / num $ |             Shift 8
+     |    E   +   T   *             |                              |                    
+   11|0   1   6   11  8   5         |                      / num $ |             Shift 5
+     |    E   +   T   *   num       |                              |                    
+   12|0   1   6   11  8   13        |                      / num $ |    reduce by F->num
+     |    E   +   T   *   F         |                              |                    
+   13|0   1   6   11                |                      / num $ |    reduce by T->T*F
+     |    E   +   T                 |                              |                    
+   14|0   1   6   11  9             |                        num $ |             Shift 9
+     |    E   +   T   /             |                              |                    
+   15|0   1   6   11  9   5         |                            $ |             Shift 5
+     |    E   +   T   /   num       |                              |                    
+   16|0   1   6   11  9   14        |                            $ |    reduce by F->num
+     |    E   +   T   /   F         |                              |                    
+   17|0   1   6   11                |                            $ |    reduce by T->T/F
+     |    E   +   T                 |                              |                    
+   18|0   1   6   11                |                            $ |                 ACC
+     |    E   +   T                 |                              |                    
+lr1 result:
+ Step|Stack                         |                         Input|              Action
+    1|0                             |      num + num * num / num $ |                    
+     |                              |                              |                    
+    2|0   5                         |          + num * num / num $ |             Shift 5
+     |    num                       |                              |                    
+    3|0   3                         |          + num * num / num $ |    reduce by F->num
+     |    F                         |                              |                    
+    4|0   2                         |          + num * num / num $ |      reduce by T->F
+     |    T                         |                              |                    
+    5|0   1                         |          + num * num / num $ |      reduce by E->T
+     |    E                         |                              |                    
+    6|0   1   6                     |            num * num / num $ |             Shift 6
+     |    E   +                     |                              |                    
+    7|0   1   6   18                |                * num / num $ |            Shift 18
+     |    E   +   num               |                              |                    
+    8|0   1   6   16                |                * num / num $ |    reduce by F->num
+     |    E   +   F                 |                              |                    
+    9|0   1   6   15                |                * num / num $ |      reduce by T->F
+     |    E   +   T                 |                              |                    
+   10|0   1   6   15  28            |                  num / num $ |            Shift 28
+     |    E   +   T   *             |                              |                    
+   11|0   1   6   15  28  18        |                      / num $ |            Shift 18
+     |    E   +   T   *   num       |                              |                    
+   12|0   1   6   15  28  36        |                      / num $ |    reduce by F->num
+     |    E   +   T   *   F         |                              |                    
+   13|0   1   6   15                |                      / num $ |    reduce by T->T*F
+     |    E   +   T                 |                              |                    
+   14|0   1   6   15  29            |                        num $ |            Shift 29
+     |    E   +   T   /             |                              |                    
+   15|0   1   6   15  29  18        |                            $ |            Shift 18
+     |    E   +   T   /   num       |                              |                    
+   16|0   1   6   15  29  37        |                            $ |    reduce by F->num
+     |    E   +   T   /   F         |                              |                    
+   17|0   1   6   15                |                            $ |    reduce by T->T/F
+     |    E   +   T                 |                              |                    
+   18|0   1   6   15                |                            $ |                 ACC
+     |    E   +   T                 |                              |                    
