@@ -25,6 +25,6 @@ int main() {
   cout << find_k_num(input, 0, n - 1, k) << endl;
 }
 /*
-10
+10 5
 1 6 4 2 3 9 10 8 7 5
 */
