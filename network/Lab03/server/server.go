@@ -10,7 +10,7 @@ func handleConn(c net.Conn) {
 	defer c.Close()
 	log.Println("Linked ip:", c.RemoteAddr().String())
 	for {
-		data := make([]byte, 8192)
+		data := make([]byte, 32768)
 		len, err := c.Read(data)
 		if err != nil {
 			log.Println("Error to read message because of ", err)
