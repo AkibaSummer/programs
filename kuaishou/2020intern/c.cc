@@ -1,3 +1,10 @@
+/*
+一群人排队，每个人有ai、bi两个属性，
+放在j位置代价为ai*(j-1)+bi*(n-j)
+求最小代价的排序方式
+
+Solution：代价变换一下发现直接排序就好
+*/
 #include <algorithm>
 #include <iostream>
 #include <vector>

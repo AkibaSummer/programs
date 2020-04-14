@@ -1,3 +1,9 @@
+/*
+有n*m个工位，某些位置无法使用。
+安排人员使得两两不相邻，求最大人数
+
+Solution：数据规模极小只有8*8，直接大暴力就好
+*/
 #include <algorithm>
 #include <iostream>
 #include <vector>
