@@ -3,5 +3,6 @@
 *.exe
 *.exe*
 *.EXE
+*.out
 .*
 Lab
