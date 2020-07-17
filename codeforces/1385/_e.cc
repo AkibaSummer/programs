@@ -21,7 +21,7 @@ void solve() {
     } else
       input2.push_back({c2, c3});
   }
-  vector< pair<vector<int>, vector<int>>> points(n+1);
+  vector<pair<vector<int>, vector<int>>> points(n + 1);
   for (auto &i : input2) {
     points[i.first].second.push_back(i.second);
     points[i.second].first.push_back(i.first);
